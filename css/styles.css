@@ -29,9 +29,25 @@ body {
 }
 
 .profile-pic {
-  max-width: 70%;
+  max-width: 80%;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+  --f: .1; /* parallax factor (the smaller the better) */
+  --r: 30px; /* the radius */
+
+  --_f: calc(100%*var(--f)/(1 + var(--f)));
+  --_a: calc(90deg*var(--f));
+
+  aspect-ratio: calc(1 + var(--f));
+  object-fit: cover;
+  clip-path: inset(0 var(--_f) 0 0 round var(--r));
+  transform: perspective(400px) translateX(0px) rotateY(var(--_a));
+  transition: .5s;
+
+}
+.profile-pic:hover {
+  clip-path: inset(0 0 0 var(--_f) round var(--r));
+  transform: perspective(400px) translateX(calc(-1*var(--_f))) rotateY(calc(-1*var(--_a)));
 }
 
 .tagline {
